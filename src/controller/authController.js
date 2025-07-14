@@ -1,5 +1,4 @@
 import authService from "../services/authService.js";
-import jwt from "jsonwebtoken";
 import { createToken } from "../helpers/token.js";
 
 const register = async (req, res) => {
@@ -71,24 +70,55 @@ const login = async (req, res) => {
   }
 };
 
+// const forgotPassword = async (req, res) => {
+//   try {
+//     const { email } = req.body;
+//     console.log("email", email);
+//     if (!email) {
+//       throw new Error("Email is required");
+//     }
+
+//     const data = await authService.forgotPassword({ email });
+
+//     res.status(200).json({ message: "Successfully sent Email", data });
+//   } catch (error) {
+//     console.log(error.message);
+//     console.log("first");
+//     res.status(400).json({
+//       message: error.message,
+//     });
+//   }
+// };
+
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log("email", email);
     if (!email) {
       throw new Error("Email is required");
     }
 
     const data = await authService.forgotPassword({ email });
-
-    res.send("Successfully sent Email");
+    res.send(data);
   } catch (error) {
     console.log(error.message);
-    console.log("first");
-    res.status(400).json({
-      message: error.message,
-    });
+    res.send(error.message);
   }
 };
 
-export { register, login, forgotPassword };
+const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      throw new Error("Email and Otp required!");
+    }
+
+    const data = await authService.verifyOtp({ email, otp });
+    res.status(200).json({ data });
+  } catch (error) {
+    console.log(error.message);
+    res.send(error.message);
+  }
+};
+
+export { register, login, forgotPassword, verifyOtp };

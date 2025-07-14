@@ -1,12 +1,11 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-const createToken = (payload)=>{
-    return jwt.sign(payload,process.env.JWT_SECRET)
-}
+const createToken = (payload) => {
+  return jwt.sign(payload, "helloworld");
+};
 
-export {createToken}
+export { createToken };
 
-
-export const verifyToken = (token)=>{
-    return jwt.verify(token,process.env.JWT_SECRET)
-}
+export const verifyToken = (token) => {
+  return jwt.verify(token, "helloworld");
+};
