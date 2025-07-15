@@ -6,7 +6,7 @@ const generateOtp = () => {
     specialChars: false,
     lowerCaseAlphabets: false,
   });
-  console.log(otp);
   return otp;
 };
+
 export { generateOtp };

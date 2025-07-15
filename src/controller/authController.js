@@ -54,8 +54,6 @@ const login = async (req, res) => {
       email: data.email,
     };
 
-    //Webtoken generation
-    // const token = jwt.sign(payload, "secretkey")
     const token = createToken(payload);
     res.cookie("authToken", token);
 
@@ -70,29 +68,12 @@ const login = async (req, res) => {
   }
 };
 
-// const forgotPassword = async (req, res) => {
-//   try {
-//     const { email } = req.body;
-//     console.log("email", email);
-//     if (!email) {
-//       throw new Error("Email is required");
-//     }
-
-//     const data = await authService.forgotPassword({ email });
-
-//     res.status(200).json({ message: "Successfully sent Email", data });
-//   } catch (error) {
-//     console.log(error.message);
-//     console.log("first");
-//     res.status(400).json({
-//       message: error.message,
-//     });
-//   }
-// };
-
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+
+    res.cookie("userEmail", email);
+    
     if (!email) {
       throw new Error("Email is required");
     }
@@ -107,7 +88,8 @@ const forgotPassword = async (req, res) => {
 
 const verifyOtp = async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const { otp } = req.body;
+    const email = req.cookies.userEmail;
 
     if (!email || !otp) {
       throw new Error("Email and Otp required!");
