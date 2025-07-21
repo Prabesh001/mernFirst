@@ -22,7 +22,7 @@ const register = async (req, res) => {
       password: password,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       message: "User registered successful",
       data,
     });
@@ -73,7 +73,7 @@ const forgotPassword = async (req, res) => {
     const { email } = req.body;
 
     res.cookie("userEmail", email);
-    
+
     if (!email) {
       throw new Error("Email is required");
     }

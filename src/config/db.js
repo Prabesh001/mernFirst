@@ -5,7 +5,7 @@ import constant from "./constant.js";
 const connectDb = async () => {
   try {
     await mongoose.connect(constant.MONGO_URI);
-    console.log("db is connected succefully");
+    console.log("db is connected successfully");
 
     adminSeeder();
   } catch (error) {
