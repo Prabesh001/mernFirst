@@ -72,7 +72,10 @@ const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    res.cookie("userEmail", email);
+    res.cookie("userEmail", email, {
+      maxAge: 5 * 60 * 1000,
+      httpOnly: true,
+    });
 
     if (!email) {
       throw new Error("Email is required");
@@ -91,6 +94,8 @@ const verifyOtp = async (req, res) => {
     const { otp } = req.body;
     const email = req.cookies.userEmail;
 
+    console.log(email);
+
     if (!email || !otp) {
       throw new Error("Email and Otp required!");
     }
@@ -99,7 +104,7 @@ const verifyOtp = async (req, res) => {
     res.status(200).json({ data });
   } catch (error) {
     console.log(error.message);
-    res.send(error.message);
+    res.status(400).json({ error: error.message });
   }
 };
 
