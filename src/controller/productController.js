@@ -1,20 +1,20 @@
 import productService from "../services/productService.js";
 
-
-
-
-
-
-const myFunction = (b,a) => {
-    return a + b;
-
-}
-
 //Create a new product
 const createProduct = async (req, res) => {
+  if (!req.file) {
+    throw new Error("Image Required");
+  }
+
+  console.log(req.file);
+  const filePath = req.file.path;
+  const fileName = req.file.filename;
+
   const product = req.body;
   //     console.log(product)
   //    return res.send(product)
+  product.imageUrl = filePath;
+  product.imageName = fileName;
 
   try {
     if (!product) {
@@ -40,7 +40,6 @@ const createProduct = async (req, res) => {
 //Product page ma sabai dekhaunu panrne xa so
 const getAllProduct = async (req, res) => {
   try {
-
     console.log(req.query);
 
     const data = await productService.getAllProduct(req.query);
